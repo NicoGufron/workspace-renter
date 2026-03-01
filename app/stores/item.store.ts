@@ -14,7 +14,7 @@ interface ItemsState {
     fetchAll: () => Promise<void>
 
     getItemsByCategory: (categoryId: string) => Item[]
-    getItemsById: (itemId: string) => Item | undefined
+    getItemById: (itemId: string) => Item | undefined
 }
 
 const CACHE_TTL = 5 * 60 * 1000
@@ -69,6 +69,6 @@ export const useItemsStore = create<ItemsState>((set, get) => ({
     getItemsByCategory: (categoryId) =>
         get().items.filter((item) => item.category_id === categoryId),
 
-    getItemsById: (itemId) =>
+    getItemById: (itemId) =>
         get().items.find((item) => item.id === itemId),
 }))

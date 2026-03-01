@@ -41,7 +41,8 @@ interface BuilderState {
     isCheckingOut: boolean,
     checkoutError: string | null,
 
-    addItem: (item: Item) => void,
+    addItem: (item: Item, position? : { x: number, y: number}) => void,
+    moveItem: (itemId: string, position: { x: number, y: number }) => void,
     removeItem: (itemId: string) => void,
     updateQuantity: (itemId: string, quantity: number) => void,
     clearBuilder: () => void,
@@ -81,13 +82,20 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     isCheckingOut: false,
     checkoutError: null,
 
-    addItem: (item) => {
-        const { selectedItems, duration, damageProtection } = get();
-        const existing = selectedItems.find((i) => i.item.id === item.id);
+    addItem: (item, position = { x: 50, y: 50 }) => {
+        const { selectedItems, duration, damageProtection } = get()
+        const existing = selectedItems.find((i) => i.item.id === item.id)
 
-        const updated = existing ? selectedItems.map((i) => i.item.id === item.id ? { ...i, quantity: i.quantity + 1 } : i) : [...selectedItems, { item, quantity: 1 }];
+        const updated = existing ? selectedItems.map((i) => i.item.id === item.id ? { ...i, quantity: i.quantity + 1 } : i)
+          : [...selectedItems, { item, quantity: 1, position }]
 
-        set({ selectedItems: updated, totalPrice: calculateTotal(updated, duration, damageProtection) });
+        set({ selectedItems: updated, totalPrice: calculateTotal(updated, duration, damageProtection) })
+      },
+
+    moveItem: (itemId, position) => {
+        set((state) => ({
+            selectedItems: state.selectedItems.map((i) => i.item.id === itemId ? { ...i, position} : i)
+        }))
     },
 
     removeItem: (itemId) => {

@@ -73,6 +73,7 @@ export interface Review {
 export interface BuilderItem {
   item: Item
   quantity: number
+  position: { x: number, y: number}
 }
 
 export interface RentalDuration {
@@ -80,4 +81,9 @@ export interface RentalDuration {
   endDate: Date | null
   unit: DurationUnit
   days: number
+}
+
+export interface DragData {
+  type: 'catalog-item' |  'desk-item'
+  itemId: string
 }
