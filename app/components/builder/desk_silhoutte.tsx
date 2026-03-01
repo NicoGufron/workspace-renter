@@ -153,7 +153,7 @@ function DeskSurface() {
 // ── DeskScene — accepts deskRef from BuilderLayout ───────────
 
 interface DeskSceneProps {
-    deskRef: RefObject<HTMLDivElement>
+    deskRef: RefObject<HTMLDivElement | null>
 }
 
 export function DeskScene({ deskRef }: DeskSceneProps) {

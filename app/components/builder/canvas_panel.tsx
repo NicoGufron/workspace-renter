@@ -14,7 +14,7 @@ const DURATION_OPTIONS: { label: string, value: DurationUnit }[] = [
 ]
 
 interface CanvasPanelProps {
-    deskRef: RefObject<HTMLDivElement>
+    deskRef: RefObject<HTMLDivElement | null>
 }
 
 export default function CanvasPanel({deskRef} : CanvasPanelProps) {
